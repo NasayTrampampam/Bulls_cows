@@ -3,6 +3,7 @@ from tkinter import *
 import random
 
 
+# Function to generate a four-digit number in the form of a list
 def do_num() -> list:
     mystery_num = []
     while len(mystery_num) < 4:
@@ -12,6 +13,7 @@ def do_num() -> list:
     return mystery_num
 
 
+# Function to compare the user's guess with the mystery number and return the number of bulls and cows
 def move(mystery_num: list, variant: list) -> list:
     bulls = 0
     cows = 0
@@ -26,6 +28,7 @@ def move(mystery_num: list, variant: list) -> list:
     return [bulls, cows]
 
 
+# Function to change the color of a button based on its toggle state
 def change_color(button, toggle):
     if toggle:
         button.config(fg='gray')
@@ -35,6 +38,7 @@ def change_color(button, toggle):
         button.toggle = True
 
 
+# Function to start a new game when the "Play Again" button is clicked
 def play_again():
     global m_n
     global moves
@@ -61,10 +65,12 @@ def play_again():
     b = 0
 
 
+# Generate a new mystery number (implementation not shown)
 m_n = do_num()
 b = 0
 moves = []
 
+# Create the main window
 bulls_cows_window = Tk()
 bulls_cows_window.title("Logic game")
 bulls_cows_window.attributes("-fullscreen", True)
@@ -73,6 +79,7 @@ canvas_3 = tk.Canvas(bulls_cows_window, width=bulls_cows_window.winfo_screenwidt
 canvas_3.pack()
 canvas_3.config(bg="#add8e6")
 
+# Create the menu button
 menu_image = PhotoImage(file="menu.png")
 menu_image = menu_image.subsample(3, 3)
 menu_button = tk.Button(bulls_cows_window, image=menu_image, bd=0, bg="#add8e6", command=bulls_cows_window.destroy)
@@ -80,6 +87,7 @@ menu_button.image = menu_image
 menu_button.place(x=10, y=10)
 
 buttons = []
+# Create number buttons from 0 to 9
 for i in range(10):
     button = tk.Button(bulls_cows_window, text=str(i), width=3, height=2, font=("Arial", 20), bd=0, bg='#add8e6',
                        fg='#FFFFCC')
@@ -91,22 +99,25 @@ for i in range(10):
 scrollbar = tk.Scrollbar(bulls_cows_window)
 scrollbar.pack()
 
+# Create a listbox to display the moves
 moves_listbox = Listbox(bulls_cows_window, font=("Arial", 48), width=43, yscrollcommand=scrollbar.set, height=7,
                         justify='center', bg="#add8e6", foreground="#FFFFCC", borderwidth=0,
                         highlightbackground="#add8e6")
 moves_listbox.place(relx=0.5, rely=0.45, anchor=CENTER)
 scrollbar.config(command=moves_listbox.yview)
 
+# Create an entry widget for the user to input their guess
 number_entry = Entry(bulls_cows_window, justify='center', width=30, font=("Arial", 68), borderwidth=0, bg="#FFFFCC",
                      foreground="#add8e6")
 number_entry.place(relx=0.5, rely=0.8, anchor=CENTER)
 
+# Create the "Play Again" button
 retry_img = PhotoImage(file=r"retry.png")
 retry_ph = retry_img.subsample(3, 3)
 play_again_button = tk.Button(bulls_cows_window, image=retry_ph, command=play_again, bd=0, bg="#add8e6")
 play_again_button.place(x=80, y=200, anchor=CENTER)
 
-
+# Function to check the user's move
 def check_move():
     global moves
     global b
@@ -133,6 +144,7 @@ def check_move():
     moves_listbox.yview(tk.END)
 
 
+# Create the submit button
 submit = PhotoImage(file=r"Submit.png")
 check_button = Button(bulls_cows_window, text="Submit answer", image=submit, font=("Arial", 68), command=check_move,
                       borderwidth=0, bg="#FFFFCC", foreground="#add8e6")
